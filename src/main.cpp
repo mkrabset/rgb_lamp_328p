@@ -2,9 +2,10 @@
 #include "main.h"
 #include "math.h"
 #define DEG_TO_RAD(X) (M_PI*(X)/180)
-#define LED_DATA 4
-#define BUTTON 6
+#define LED_DATA 5
+#define BUTTON 4
 #define DEBUG false
+#define NUM_LEDS 25
 
 byte rgb[3];
 
@@ -13,27 +14,44 @@ volatile float hue=0;
 volatile float saturation=1;
 volatile float intensity=0.1;
 
+volatile bool A = false;
+volatile bool B = false;
+volatile unsigned int count = 0;
+volatile bool button_down=false;
+
 void setup() {
   mode=2;
   hue=0;
   saturation=1;
   intensity=0.05;
   pinMode(LED_DATA, OUTPUT);
-  pinMode(BUTTON, INPUT);
+  pinMode(BUTTON, INPUT_PULLUP);
   pinMode(2, INPUT);
   pinMode(3, INPUT);
-  attachInterrupt(0, isrA_up, RISING);  // Pin 2 interrupt
-  attachInterrupt(1, isrB_up, RISING);  // Pin 3 interrupt
+
+  // Pin 2 interrupt
+  A=((PIND & B00000100) == B00000100);
+  if (A) {
+    attachInterrupt(0, isrA_down, FALLING);
+  } else {
+    attachInterrupt(0, isrA_up, RISING);  
+  }
+
+  // Pin 3 interrupt
+  B=((PIND & B00001000) == B00001000);
+  if (B) {
+    attachInterrupt(1, isrB_down, FALLING); 
+  } else {
+    attachInterrupt(1, isrB_up, RISING);  
+  }
+  
   update();
   if (DEBUG) {
     Serial.begin(115200);
   }
 }
 
-volatile bool A = false;
-volatile bool B = false;
-volatile unsigned int count = 0;
-volatile bool button_down=false;
+
  
 void isrA_up() {
   A=true;
@@ -85,7 +103,7 @@ void up() {
       break;
     }
     case 1: {
-      saturation+=0.005;
+      saturation+=0.01;
       if (saturation>1) {
         saturation=1;
       }
@@ -93,8 +111,8 @@ void up() {
     }
     case 2: {
       intensity+=0.005;
-      if (intensity>1) {
-        intensity=1;
+      if (intensity>0.8) {
+        intensity=0.8;
       }
       break;
     }
@@ -113,7 +131,7 @@ void down()  {
       break;
     }
     case 1: {
-      saturation-=0.005;
+      saturation-=0.01;
       if (saturation<0) {
         saturation=0;
       }
@@ -157,7 +175,7 @@ void update() {
   }
   noInterrupts();
   intro();
-  for (int i=0;i<72;i++) {
+  for (int i=0;i<NUM_LEDS;i++) {
       sendRGB(rgb[0],rgb[1],rgb[2]);
   }
   interrupts();
@@ -196,7 +214,7 @@ void sendByte(byte b) {
 }
 
 void send1() {
-  PORTD = B010000; //set PIN HIGH, 1 cycle, now wait 700ns
+  PORTD |= B00100000; //set PIN HIGH, 1 cycle, now wait 700ns
   asm volatile ("nop"::);
   asm volatile ("nop"::);
   asm volatile ("nop"::);
@@ -208,19 +226,19 @@ void send1() {
   asm volatile ("nop"::);
   asm volatile ("nop"::);
 
-  PORTD = B00000;   //set PIN LOW, 1 cycle, now wait 600ns
+  PORTD &= B11011111;   //set PIN LOW, 1 cycle, now wait 600ns
 
 
 }
 void send0() {
-  PORTD = B010000; //set PIN HIGH, 1 cycle, now wait 350ns
+  PORTD |= B00100000; //set PIN HIGH, 1 cycle, now wait 350ns
   asm volatile ("nop"::); //uses 1 cycle, thus takes about 62.5 ns
   asm volatile ("nop"::);
   asm volatile ("nop"::);
 
 
 
-  PORTD = B00000; //set PIN LOW, 1 cycle, now wait 800ns
+  PORTD &= B11011111; //set PIN LOW, 1 cycle, now wait 800ns
   asm volatile ("nop"::);
   asm volatile ("nop"::);
   asm volatile ("nop"::);
