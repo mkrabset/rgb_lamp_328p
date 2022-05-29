@@ -26,8 +26,8 @@ void setup() {
   intensity=0.05;
   pinMode(LED_DATA, OUTPUT);
   pinMode(BUTTON, INPUT_PULLUP);
-  pinMode(2, INPUT);
-  pinMode(3, INPUT);
+  pinMode(2, INPUT_PULLUP);
+  pinMode(3, INPUT_PULLUP);
 
   // Pin 2 interrupt
   A=((PIND & B00000100) == B00000100);
@@ -205,7 +205,7 @@ void sendRGB(byte r, byte g, byte b) {
 void sendByte(byte b) {
   for (int i = 0; i < 8; i++) {
     if ((b & B10000000) != 0) {
-      send1();
+      send1();  // send1();
     } else {
       send0();
     }
@@ -214,7 +214,9 @@ void sendByte(byte b) {
 }
 
 void send1() {
-  PORTD |= B00100000; //set PIN HIGH, 1 cycle, now wait 700ns
+  PORTD |= B00100000; //set PIN HIGH, 1 cycle, now wait min 700ns
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
   asm volatile ("nop"::);
   asm volatile ("nop"::);
   asm volatile ("nop"::);
@@ -226,19 +228,38 @@ void send1() {
   asm volatile ("nop"::);
   asm volatile ("nop"::);
 
-  PORTD &= B11011111;   //set PIN LOW, 1 cycle, now wait 600ns
-
+  PORTD &= B11011111;   //set PIN LOW, wait for a while
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
 
 }
 void send0() {
-  PORTD |= B00100000; //set PIN HIGH, 1 cycle, now wait 350ns
-  asm volatile ("nop"::); //uses 1 cycle, thus takes about 62.5 ns
+  PORTD |= B00100000; //set PIN HIGH, 1 cycle, now wait max 350ns
+  asm volatile ("nop"::); 
+  asm volatile ("nop"::);
+  
+  PORTD &= B11011111; //set PIN LOW, wait for a while
   asm volatile ("nop"::);
   asm volatile ("nop"::);
-
-
-
-  PORTD &= B11011111; //set PIN LOW, 1 cycle, now wait 800ns
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
+  asm volatile ("nop"::);
   asm volatile ("nop"::);
   asm volatile ("nop"::);
   asm volatile ("nop"::);
