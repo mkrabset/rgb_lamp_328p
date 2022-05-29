@@ -1,0 +1,31 @@
+*Pick And Place List
+*Company=
+*Author=
+*eMail=
+*
+*Project=rgblamp
+*Date=16:03:37
+*CreatedBy=Fritzing 0.9.6b..
+*
+*
+*Coordinates in mm, always center of component
+*Origin 0/0=Lower left corner of PCB
+*Rotation in degree (0-360, math. pos.)
+*
+*No;Value;Package;X;Y;Rotation;Side;Name
+1;;THT;30.0881;-3.35432;0;Bottom;J1
+2;;THT;44.0581;-37.0093;-90;Bottom;Extra
+3;;;4.05315;-45.8993;0;Bottom;Hole1
+4;;THT;36.4381;-3.35432;-90;Bottom;Encoder
+5;;THT;27.5481;-45.8993;-90;Bottom;LEDSTRIP
+6;1k;THT;30.0881;-21.1343;0;Bottom;1k
+7;;ptc;10.4031;-33.8343;0;Bottom;FUSE
+8;;THT;4.68815;-23.0393;0;Bottom;POWER
+9;1µF;100 mil [THT, electrolytic];12.9431;-21.7693;-90;Bottom;C1
+10;;;65.6481;-45.8993;0;Bottom;Hole4
+11;;THT;52.9481;-10.3393;-90;Bottom;Extra
+12;;;65.6481;-3.98923;0;Bottom;Hole3
+13;1k;THT;30.0881;-23.6743;0;Bottom;1k
+14;;;4.05315;-3.98932;0;Bottom;Hole2
+15;1k;THT;30.0881;-26.2143;0;Bottom;1k
+16;;;42.7881;-23.6658;-90;Bottom;NANO
