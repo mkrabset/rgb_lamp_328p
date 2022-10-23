@@ -4,8 +4,8 @@
 #define DEG_TO_RAD(X) (M_PI*(X)/180)
 #define LED_DATA 5
 #define BUTTON 4
-#define DEBUG false
-#define NUM_LEDS 25
+#define DEBUG false 
+#define NUM_LEDS 60
 
 byte rgb[3];
 
