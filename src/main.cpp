@@ -5,14 +5,14 @@
 #define LED_DATA 5
 #define BUTTON 4
 #define DEBUG false 
-#define NUM_LEDS 60
+#define NUM_LEDS 74
 
 byte rgb[3];
 
 volatile int mode=0;
-volatile float hue=0;
-volatile float saturation=1;
-volatile float intensity=0.1;
+volatile int hue=0;
+volatile int saturation=100;
+volatile int intensity=5;
 
 volatile bool A = false;
 volatile bool B = false;
@@ -20,10 +20,11 @@ volatile unsigned int count = 0;
 volatile bool button_down=false;
 
 void setup() {
+  TIMSK2 = 0;  // Prevent timer2 interrupts
   mode=2;
   hue=0;
-  saturation=1;
-  intensity=0.05;
+  saturation=100;
+  intensity=5;
   pinMode(LED_DATA, OUTPUT);
   pinMode(BUTTON, INPUT_PULLUP);
   pinMode(2, INPUT_PULLUP);
@@ -96,63 +97,50 @@ void isrB_down() {
 void up() {
   switch(mode) {
     case 0: {
-      hue+=2;
-      if (hue>360) {
-        hue-=360;
-      }
+      hue=(hue+2) % 360;
       break;
     }
     case 1: {
-      saturation+=0.01;
-      if (saturation>1) {
-        saturation=1;
+      saturation+=1;
+      if (saturation>100) {
+        saturation=100;
       }
       break;
     }
     case 2: {
-      intensity+=0.005;
-      if (intensity>0.8) {
-        intensity=0.8;
+      intensity+=1;
+      if (intensity>80) {
+        intensity=80;
       }
       break;
     }
   }
-  
   update();
 }
 
 void down()  {
   switch(mode) {
     case 0: {
-      hue-=2;
-      if (hue<0) {
-        hue+=360;
-      }
+      hue=(hue+358) % 360;
       break;
     }
     case 1: {
-      saturation-=0.01;
+      saturation-=1;
       if (saturation<0) {
         saturation=0;
       }
       break;
     }
     case 2: {
-      intensity-=0.005;
+      intensity-=1;
       if (intensity<0) {
         intensity=0;
       }
       break;
-
-      break;
     }
   }
-  
   update();
 }
-
-
-
 
 void loop() {
   if (digitalRead(BUTTON)==LOW) {
@@ -171,7 +159,7 @@ void update() {
     rgb[1]=0;
     rgb[2]=0;
   } else {
-    hsi2rgb(hue,saturation,intensity,&rgb[0]);
+    hsi2rgb((float)hue,((float)saturation)/100,((float)intensity)/100,&rgb[0]);
   }
   noInterrupts();
   intro();
@@ -268,10 +256,10 @@ void send0() {
 
 void hsi2rgb(float H, float S, float I, byte* rgb) {
   int r, g, b;
-  H = fmod(H,360); // cycle H around to 0-360 degrees
+//  H = fmod(H,360); // cycle H around to 0-360 degrees
   H = 3.14159*H/(float)180; // Convert to radians.
-  S = S>0?(S<1?S:1):0; // clamp S and I to interval [0,1]
-  I = I>0?(I<1?I:1):0;
+//  S = S>0?(S<1?S:1):0; // clamp S and I to interval [0,1]
+//  I = I>0?(I<1?I:1):0;
     
   // Math! Thanks in part to Kyle Miller.
   if(H < 2.09439) {
