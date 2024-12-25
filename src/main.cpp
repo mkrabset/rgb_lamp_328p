@@ -7,6 +7,8 @@
 #define DEBUG false 
 #define NUM_LEDS 74
 
+#define MAX_INTENSITY 45
+
 byte rgb[3];
 
 volatile int mode=0;
@@ -97,7 +99,7 @@ void isrB_down() {
 void up() {
   switch(mode) {
     case 0: {
-      hue=(hue+2) % 360;
+      hue=(hue+1) % 360;
       break;
     }
     case 1: {
@@ -109,8 +111,8 @@ void up() {
     }
     case 2: {
       intensity+=1;
-      if (intensity>80) {
-        intensity=80;
+      if (intensity>MAX_INTENSITY) {
+        intensity=MAX_INTENSITY;
       }
       break;
     }
@@ -121,7 +123,7 @@ void up() {
 void down()  {
   switch(mode) {
     case 0: {
-      hue=(hue+358) % 360;
+      hue=(hue+359) % 360;
       break;
     }
     case 1: {

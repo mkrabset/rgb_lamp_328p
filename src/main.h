@@ -15,6 +15,6 @@ void isrA_down();
 void isrB_down();
 void up();
 void down();
-void update();
+void update();   
 
 #endif
