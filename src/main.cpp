@@ -5,7 +5,7 @@
 #define LED_DATA 5
 #define BUTTON 4
 #define DEBUG false 
-#define NUM_LEDS 74
+#define NUM_LEDS 100
 
 #define MAX_INTENSITY 45
 
@@ -96,6 +96,15 @@ void isrB_down() {
   attachInterrupt(1, isrB_up, RISING);
 }
 
+void debounceWait() {
+  return;
+  //noInterrupts();
+  for (int i=0;i<10000;i++) {
+    asm volatile ("nop"::);
+  }
+  //interrupts();
+}
+
 void up() {
   switch(mode) {
     case 0: {
@@ -118,6 +127,7 @@ void up() {
     }
   }
   update();
+  debounceWait();
 }
 
 void down()  {
@@ -142,6 +152,7 @@ void down()  {
     }
   }
   update();
+  debounceWait();
 }
 
 void loop() {

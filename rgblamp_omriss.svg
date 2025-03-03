@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+
+<svg
+   x="0in"
+   viewBox="0 0 198.425 141.732"
+   version="1.2"
+   y="0in"
+   width="2.75591in"
+   height="1.9685in"
+   id="svg135"
+   sodipodi:docname="rgblamp_omriss.svg"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs135" />
+  <sodipodi:namedview
+     id="namedview135"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="in"
+     inkscape:zoom="6.0007619"
+     inkscape:cx="132.31653"
+     inkscape:cy="99.820657"
+     inkscape:window-width="3440"
+     inkscape:window-height="1345"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg135" />
+  <rect
+     stroke="#000000"
+     x="-198.13699"
+     stroke-width="0.5"
+     width="197.849"
+     y="0.28799999"
+     id="boardoutline"
+     fill="none"
+     height="141.15601"
+     fill-opacity="0.5"
+     transform="scale(-1,1)" />
+  <circle
+     stroke="#000000"
+     cx="-12.33557"
+     cy="11.62397"
+     r="4.53543"
+     stroke-width="0"
+     id="nonconn0"
+     fill="#000000"
+     transform="scale(-1,1)" />
+  <circle
+     stroke="#000000"
+     cx="-12.33557"
+     cy="130.42442"
+     r="4.53543"
+     stroke-width="0"
+     id="circle62"
+     fill="#000000"
+     transform="scale(-1,1)" />
+  <circle
+     stroke="#000000"
+     cx="-186.93578"
+     cy="11.62397"
+     r="4.53543"
+     stroke-width="0"
+     id="circle65"
+     fill="#000000"
+     transform="scale(-1,1)" />
+  <circle
+     stroke="#000000"
+     cx="-186.93578"
+     cy="130.42442"
+     r="4.53543"
+     stroke-width="0"
+     id="circle68"
+     fill="#000000"
+     transform="scale(-1,1)" />
+</svg>
